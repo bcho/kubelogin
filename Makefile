@@ -20,10 +20,10 @@ else
 	VERSION := $(GIT_BRANCH)/$(GIT_HASH)
 endif
 
-LDFLAGS    := -X $(PACKAGE)/pkg/cmd.version=$(VERSION) \
-    -X $(PACKAGE)/pkg/cmd.goVersion=$(shell go version | cut -d " " -f 3) \
-	-X $(PACKAGE)/pkg/cmd.buildTime=$(BUILD_TIME) \
-	-X '$(PACKAGE)/pkg/cmd.platform=$(PLATFORM)'
+LDFLAGS    := -X $(PACKAGE)/internal/cmd.version=$(VERSION) \
+    -X $(PACKAGE)/internal/cmd.goVersion=$(shell go version | cut -d " " -f 3) \
+	-X $(PACKAGE)/internal/cmd.buildTime=$(BUILD_TIME) \
+	-X '$(PACKAGE)/internal/cmd.platform=$(PLATFORM)'
 
 all: $(TARGET)
 

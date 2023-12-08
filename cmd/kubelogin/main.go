@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 
-	"github.com/Azure/kubelogin/pkg/cmd"
+	"github.com/Azure/kubelogin/internal/cmd"
 	"github.com/spf13/pflag"
 	klog "k8s.io/klog/v2"
 )
