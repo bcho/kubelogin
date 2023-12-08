@@ -10,6 +10,7 @@ endif
 GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 GIT_HASH   := $(shell git rev-parse --verify HEAD)
 GIT_TAG    := $(shell git describe --tags --exact-match --abbrev=0 2>/dev/null || echo "")
+PACKAGE    := github.com/Azure/kubelogin
 BUILD_TIME ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 PLATFORM   := $(OS)/$(ARCH)$(if $(GOARM),v$(GOARM),)
 
@@ -19,10 +20,10 @@ else
 	VERSION := $(GIT_BRANCH)/$(GIT_HASH)
 endif
 
-LDFLAGS    := -X main.version=$(VERSION) \
-    -X main.goVersion=$(shell go version | cut -d " " -f 3) \
-	-X main.buildTime=$(BUILD_TIME) \
-	-X 'main.platform=$(PLATFORM)'
+LDFLAGS    := -X $(PACKAGE)/pkg/cmd.version=$(VERSION) \
+    -X $(PACKAGE)/pkg/cmd.goVersion=$(shell go version | cut -d " " -f 3) \
+	-X $(PACKAGE)/pkg/cmd.buildTime=$(BUILD_TIME) \
+	-X '$(PACKAGE)/pkg/cmd.platform=$(PLATFORM)'
 
 all: $(TARGET)
 
@@ -36,7 +37,7 @@ version:
 	@echo VERSION: $(VERSION)
 
 $(TARGET): clean
-	CGO_ENABLED=0 go build -o $(BIN) -ldflags "$(LDFLAGS)"
+	CGO_ENABLED=0 go build -o $(BIN) -ldflags "$(LDFLAGS)" ./cmd/kubelogin
 
 clean:
 	-rm -f $(BIN)

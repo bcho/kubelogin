@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import "fmt"
 
@@ -10,7 +10,7 @@ type Version struct {
 }
 
 var (
-	v         Version
+	cliVersion         Version
 	version   string
 	goVersion string
 	buildTime string
@@ -18,7 +18,7 @@ var (
 )
 
 func init() {
-	v = Version{
+	cliVersion = Version{
 		Version:   version,
 		GoVersion: goVersion,
 		BuildTime: buildTime,
@@ -27,5 +27,11 @@ func init() {
 }
 
 func (ver Version) String() string {
-	return fmt.Sprintf("\ngit hash: %s\nGo version: %s\nBuild time: %s\nPlatform: %s", v.Version, v.GoVersion, v.BuildTime, v.Platform)
+	return fmt.Sprintf(
+		"\ngit hash: %s\nGo version: %s\nBuild time: %s\nPlatform: %s",
+		ver.Version,
+		ver.GoVersion,
+		ver.BuildTime,
+		ver.Platform,
+	)
 }
